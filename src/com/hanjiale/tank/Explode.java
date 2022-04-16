@@ -1,6 +1,8 @@
 package com.hanjiale.tank;
 
 import java.awt.Graphics;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * ±¬Õ¨Àà
@@ -23,11 +25,16 @@ public class Explode {
 	
 	private int step = 0;
 	
+	ExecutorService ex = Executors.newFixedThreadPool(4);
+	
 	public Explode(int x,int y,TankFrame tFrame) {
 		this.x = x;
 		this.y = y;
 		this.tankFrame = tFrame;
-		new Audio("audio/explode.wav").play();
+		//
+		ex.submit(() ->  {
+			new Audio("audio/explode.wav").play();
+		});
 	}
 	
 	public void paint(Graphics g) {
